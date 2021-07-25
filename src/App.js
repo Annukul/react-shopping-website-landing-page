@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Head from './components/Head';
+import Content from './components/Content';
+import Footer from './components/Footer';
+import Men from './Mdata';
+import Women from './Wdata';
 
 function App() {
+  const [count, setCount] = useState(0);
+  const [cartClass, setCartClass] = useState('cart-item-close');
+  const [menItems, setMenItems] = useState(Men);
+  const [womenItems, setWomenItems] = useState(Women);
+  const [cartItems, setCartItems] = useState({ id: '', type: '', price: '' });
+
+  const getItems = () => {
+    let allItems = menItems + womenItems;
+    console.log(allItems);
+  }
+  getItems();
+
+  const addCart = () => {
+    const addOne = () => {
+      const newNum = count + 1;
+      setCount(newNum);
+    }
+    addOne();
+  }
+
+  const showCart = () => {
+    if (cartClass === 'cart-item-close') {
+      setCartClass('cart-items');
+    }
+    if (cartClass === 'cart-items') {
+      setCartClass('cart-item-close');
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Head count={count} showCart={showCart} cartClass={cartClass} />
+      <Content addCart={addCart} menItems={menItems} womenItems={womenItems} />
+      <Footer />
+    </>
   );
 }
 
